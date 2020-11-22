@@ -7,7 +7,25 @@
 </head>
 <body>
   <div id="app">
-    <!-- この#appの内側にテンプレートを書き込んでいく -->
+    <h1>テキスト表示をする</h1>
+    <p>{{ message }}</p>
+    <h1>リスト表示をする</h1>
+    <ol>
+      <li v-for="item in list">{{ item }}</li>
+    </ol>
+    <h1>イベントの利用</h1>
+    <button v-on:click="handleClick">Click</button>
+    <h1>フォーム入力との同期</h1>
+    <input v-model="message">
+    <br>
+    <input v-model.number="message">
+    <h1>条件分岐</h1>
+    <p v-if="show">Hello Vue.js!</p>
+    <h1>トランジション & アニメーション</h1>
+    <button v-on:click="show=!show">切り替え</button>
+    <transition>
+      <p v-if="show">Hello Vue.js!</p>
+    </transition>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   <script src="main.js"></script>
