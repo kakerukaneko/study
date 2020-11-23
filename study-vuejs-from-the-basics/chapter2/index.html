@@ -7,16 +7,59 @@
 </head>
 <body>
   <div id="app">
-    <!-- 1 オブジェクトのプロパティを表示 -->
-    <p>{{ message.value }}</p>
-    <!-- 2 文字列の長さを表示 -->
-    <p>{{ message.value.length }}</p>
-    <!-- 3 リストのインデックス2を表示 -->
-    <p>{{ list[2] }}</p>
-    <!-- 4 プロパティを組み合わせて使用 -->
-    <p>{{ list[num] }}</p>
+    <h1>クリックしてカウントを増やす。</h1>
+    <p>{{ count }}回クリックしました。</p>
+    <button v-on:click="increment">カウントを増やす。</button>
+    <h1>クラスとスタイルのデータバインディング</h1>
+    <button v-on:click="isActive=!isActive">isActiveを切り替える</button>
+    <p v-bind:class="{ child: isChild, 'is-active': isActive }" class="item">
+      動的なクラス
+    </p>
+    <p v-bind:style="{ color: textColor, backgroundColor: bgColor }" class="item">
+      動的なスタイル
+    </p>
+    <!-- オブジェクトを丸ごと渡せば、わざわざ各属性にバインドをする必要性がない🔥 -->
+    <img v-bind="item">
+    <h1>SVGのデータバインディング</h1>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <circle cx="100" cy="75" v-bind:r="radius" fill="lightpink" />
+    </svg>
+    <input type="range" min="0" max="100" v-model="radius">
+    <h1>リストデータの表示と更新</h1>
+    <ul>
+      <li v-for="item in list" v-bind:key="item.id" v-if="item.hp < 300" v-bind:class="{ tuyoi: item.hp > 300 }">
+        ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+        <span v-if="item.hp > 300">つよい！</span>
+      </li>
+    </ul>
+    <!-- このフォームの入力値を新しいモンスターの名前に使う -->
+    名前
+    <input v-model="name">
+    <button v-on:click="doAdd">モンスターを追加</button>
+    <ul>
+      <li v-for="(item, index) in list" v-bind:key="item.id">
+        ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+        <button v-on:click="doRemove(index)">モンスターを削除</button>
+      </li>
+    </ul>
+    <h1>リスト要素プロパティを更新しよう</h1>
+    <ul>
+      <li v-for="(item, index) in list" v-bind:key="item.id" v-if="item.hp">
+        ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+        <span v-if="item.hp < 50">瀕死！</span>
+        <!-- ボタンはv-for内に作成 -->
+        <button v-on:click="doAttack(index)">攻撃する</button>
+      </li>
+    </ul>
+    <h1>外部からデータを取得する</h1>
+    <ul>
+      <li v-for="(item, index) in list" v-bind:key="item.id">
+        ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+      </li>
+    </ul>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
