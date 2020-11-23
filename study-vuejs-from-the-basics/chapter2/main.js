@@ -1,6 +1,14 @@
 new Vue({
   el: '#app',
+  mounted: function() {
+    console.log(this.$el);
+    console.log(this.$refs.hello);
+  },
   data: {
+    message: 'hello',
+    message_html: 'HELLO <strong>HELLO VUE</strong>',
+    url: 'kakerukaneko.com',
+    show: true,
     count: 0,
     isChild: true,
     isActive: true,
@@ -40,6 +48,12 @@ new Vue({
     // 攻撃ボタンをクリックしたときのハンドラ
     doAttack: function (index) {
       this.list[index].hp -= 10 // HPを減らす
+    },
+    handleClick() {
+      var count = this.$refs.count
+      if (count) {
+        count.innerText = parseInt(count.innerText, 10) + 1
+      }
     }
   },
   created: function(){

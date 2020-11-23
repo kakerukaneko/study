@@ -6,7 +6,7 @@
   <link href="main.css" rel="stylesheet">
 </head>
 <body>
-  <div id="app">
+  <div id="app" v-cloak>
     <h1>クリックしてカウントを増やす。</h1>
     <p>{{ count }}回クリックしました。</p>
     <button v-on:click="increment">カウントを増やす。</button>
@@ -51,12 +51,53 @@
         <button v-on:click="doAttack(index)">攻撃する</button>
       </li>
     </ul>
+    <!-- ローカルから取得している関係でエラーが発生してかつ、取得できない -->
     <h1>外部からデータを取得する</h1>
     <ul>
       <li v-for="(item, index) in list" v-bind:key="item.id">
         ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
       </li>
     </ul>
+    <h1>DOMを直接参照する$elと$refs</h1>
+    <p ref="hello">HELLO</p>
+    <button v-on:click="handleClick">カウントアップ</button>
+    <button v-on:click="show=!show">表示/非表示</button>
+    <span ref="count" v-if="show">0</span>
+    <h1>テンプレート制御ディレクティブ</h1>
+    <table>
+      <tr>
+        <!-- 静的なコンテンツとして扱う。XSS対策や、操作する予定のない長いテキストに使用するとパフォーマンス向上が見られる。 -->
+        <th>v-pre</th>
+        <td>
+          <a :href="url" v-pre>
+          HELLO {{ message }}
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <!-- 初回だけテンプレートを評価する -->
+        <th>v-once</th>
+        <td>
+          <a :href="url" v-once>
+          HELLO {{ message }}
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <!-- Mustache構文 {{ hoge }} を使う代わりに使用できる。-->
+        <th>v-text</th>
+        <td>
+          <span v-text="message"></span>
+        </td>
+      </tr>
+      <tr>
+        <!-- HTMLタグをそのまま表示できる、はずだけどできない。-->
+        <th>v-html</th>
+        <td>
+          <span v-html="message_html"></span>
+        </td>
+      </tr>
+    </table>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
