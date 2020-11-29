@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Vue.js App</title>
   <link href="main.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/smooth-scroll@12.1.5"></script>
 </head>
 <body>
   <div id="app">
@@ -54,6 +55,60 @@
     <!-- event.preventDefault()を呼び出さない事を明示的にする。 -->
 
     <h1>フォーム入力バインディング</h1>
+    <h2>複数行テキスト</h2>
+    <textarea v-model="message"></textarea>
+    <pre>{{ message }}</pre>
+
+    <h2>チェックボックス</h2>
+    <label>
+      <input type="checkbox" v-model="val"> {{ val }}
+    </label>
+
+    <h2>複数要素 with チェックボックス</h2>
+    <label><input type="checkbox" v-model="val2" value="A">A</label>
+    <label><input type="checkbox" v-model="val2" value="B">B</label>
+    <label><input type="checkbox" v-model="val2" value="C">C</label>
+    <p> {{ val2 }} </p>
+
+    <h2>ラジオボタン</h2>
+    <label><input type="radio" v-model="radio" value="a">A</label>
+    <label><input type="radio" v-model="radio" value="b">B</label>
+    <label><input type="radio" v-model="radio" value="c">C</label>
+    <p> {{ radio }} </p>
+
+    <h2>セレクトボックス</h2>
+    <select v-model="select">
+      <option disabled="disabled">Pleace select it</option>
+      <option value="a">A</option>
+      <option value="b">B</option>
+      <option value="c">C</option>
+    </select>
+    <p>{{ select }}</p>
+
+    <h2>複数選択 with セレクトボックス</h2>
+    <select v-model="selects" multiple>
+      <option disabled="disabled">Pleace select it</option>
+      <option value="a">A</option>
+      <option value="b">B</option>
+      <option value="c">C</option>
+    </select>
+    <p>{{ selects }}</p>
+
+    <h2>画像ファイル</h2>
+    <!-- サムネ表示できる。 -->
+    <input type="file" v-on:change="handleChange">
+    <div v-if="preview"><img v-bind:src="preview"></div>
+
+    <h2>スクロール関連</h2>
+    <header v-bind:class="{ compact: scrollY > 200 }">
+      200pxより下にスクロールしたら、 .compact を付与
+    </header>
+
+    <h2>スムーススクロールの実装</h2>
+    <div class="content">...</div>
+    <div v-on:click="scrollTop">
+      ページ上部へ移動
+    </div>
 
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
