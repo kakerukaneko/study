@@ -1,12 +1,17 @@
 new Vue({
   el: '#app',
-  mounted: function() {
-  },
   data: {
+    message: 'Hello vue.js',
   },
   methods: {
-  },
-  created(){
-    
+    handleClick: function() {
+    },
+    handleInput: function (event) {
+      // 代入する前に何かしら処理が行える
+      this.message = event.target.value
+    },
+    handler: function(comment) {
+      console.log(comment)
+    }
   }
 })

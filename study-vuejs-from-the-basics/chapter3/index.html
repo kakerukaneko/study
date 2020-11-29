@@ -7,6 +7,54 @@
 </head>
 <body>
   <div id="app">
+    <h1>イベントハンドリング</h1>
+    <button v-on:click="handleClick">クリック</button>
+    <!-- イベントハンドラをinputフォームに使用すると、入力内容を確認してから変数にいれる事が出来る (e.g. バリデーションチェックなど) -->
+    <input v-bind:value="message" v-on:input="handleInput">
+    <!-- 右ボタンを押した時のメニューを表示させない -->
+    <div v-on:click.right.preven="handler">example</div>
+    <h2>いろいろなイベント修飾子</h2>
+
+    <p>.stop</p>
+    <div v-on:click="handler('div1')">
+      div1
+      <a href="#top" v-on:click.stop="handler('div2')">('div2')</a>
+      <a href="#top" v-on:click="handler('本来ならこれが出る')">stop無し</a>
+    </div>
+
+    <p>.prevent</p>
+    <div v-on:click="handler('div1')">
+      div1
+      <!-- リンクの遷移やsubmitなど、元の処理をキャンセルする。 -->
+      <a href="/" v-on:click.prevent="handler('div2')">div</a>
+    </div>
+
+    <p>.capture</p>
+    <div v-on:click.capture="handler('div1')">
+      div1
+      <div v-on:click="handler('div2')">
+        div2
+        <!-- div3を押すと captureがついているやつが優先的に呼ばれる -->
+        <div v-on:click="handler('div3')">div3</div>
+      </div>
+    </div>
+
+    <!-- モーダルの背景部分をクリックして閉じる場合などに使用する -->
+    <p>.self</p>
+    <div class="overlay" v-on:click.self="close"></div>
+
+    <!-- $emitを使用する所、.native使うと直接イベントを発火させる事が出来る -->
+    <p>.native</p>
+    <!-- コンポーネントをクリックするとハンドラが呼び出される -->
+    <my-component v-on:click.native="handler"></my-component>
+    <!-- コンポーネントをクリックしてもハンドラは呼び出されない -->
+    <my-component v-on:click="handler"></my-component>
+
+    <p>.passive</p>
+    <!-- event.preventDefault()を呼び出さない事を明示的にする。 -->
+
+    <h1>フォーム入力バインディング</h1>
+
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
